@@ -17,7 +17,7 @@ test.describe('Autenticação', () => {
 
   test('Test Case 002: Login com credenciais inválidas @Regression', async ({ loginPage, data }) => {
     await loginPage.login(data.InvalidUser.Email, data.InvalidUser.Password);
-    await loginPage.shouldShowError('Problemas com o login do usuário');
+    await loginPage.shouldSeeMessage('error', 'Problemas com o login do usuário');
   });
 
   test('Test Case 003: Login com sucesso @Smoke @Regression', async ({ page, loginPage, data }) => {
@@ -31,11 +31,11 @@ test.describe('Autenticação', () => {
 
     await loginPage.navigate();
     await loginPage.login(user.email, user.password);
-    await loginPage.shouldAuthenticate(`Bem vindo, ${user.name}!`);
+    await loginPage.shouldSeeMessage('success', `Bem vindo, ${user.name}!`);
   });
 
   test('Test Case 004: Login com sucesso com usuário existente @Smoke @Regression', async ({ loginPage, data }) => {
     await loginPage.login(data.ExistingUser.Email, data.ExistingUser.Password);
-    await loginPage.shouldAuthenticate(`Bem vindo, ${data.ExistingUser.Name}!`);
+    await loginPage.shouldSeeMessage('success', `Bem vindo, ${data.ExistingUser.Name}!`);
   });
 });

@@ -19,12 +19,10 @@ class LoginPage {
     });
   }
 
-  async shouldShowError(text) {
-    await step('Then I should see an error message', () => validateText(this.el.errorMessage, text));
-  }
-
-  async shouldAuthenticate(text) {
-    await step('Then I should be authenticated', () => validateText(this.el.successMessage, text));
+  // type: 'error' | 'success'
+  async shouldSeeMessage(type, text) {
+    const message = type === 'error' ? this.el.errorMessage : this.el.successMessage;
+    await step(`Then I should see the ${type} message "${text}"`, () => validateText(message, text));
   }
 }
 

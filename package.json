@@ -10,7 +10,15 @@
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:chromium": "playwright test --project=chromium",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "test:smoke": "playwright test --grep @Smoke",
+    "test:regression": "playwright test --grep @Regression",
+    "test:stg": "ENV=Stg playwright test",
+    "test:prd": "ENV=Prd playwright test",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "test:allure": "playwright test; allure generate allure-results --clean -o allure-report"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +26,9 @@
   "devDependencies": {
     "@playwright/test": "^1.65.0",
     "@types/node": "^26.6.6",
+    "allure-commandline": "^2.46.1",
+    "allure-js-commons": "^3.14.0",
+    "allure-playwright": "^3.14.0",
     "dotenv": "^18.0.10",
     "eslint": "^10.14.0",
     "prettier": "^3.9.10"

@@ -1,8 +1,9 @@
-const { defineConfig, devices } = require('@playwright/test');
-const { baseUrl } = require('./resources/support/env');
+import { defineConfig, devices } from '@playwright/test';
+import { baseUrl } from './resources/support/env';
 
-module.exports = defineConfig({
+export default defineConfig({
   testDir: './tests',
+  testMatch: '**/*.spec.ts',
   outputDir: './evidence/test-results',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,

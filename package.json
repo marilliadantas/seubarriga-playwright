@@ -11,26 +11,34 @@
     "test:debug": "playwright test --debug",
     "test:chromium": "playwright test --project=chromium",
     "report": "playwright show-report",
-    "test:smoke": "playwright test --grep @Smoke",
-    "test:regression": "playwright test --grep @Regression",
     "test:stg": "ENV=Stg playwright test",
     "test:prd": "ENV=Prd playwright test",
     "allure:generate": "allure generate allure-results --clean -o allure-report",
     "allure:open": "allure open allure-report",
     "allure:serve": "allure serve allure-results",
-    "test:allure": "playwright test; allure generate allure-results --clean -o allure-report"
+    "test:allure": "playwright test; allure generate allure-results --clean -o allure-report",
+    "test:jest": "jest",
+    "test:unit": "jest tests/unit",
+    "test:api": "jest tests/api",
+    "typecheck": "tsc --noEmit",
+    "test:all": "npm run typecheck && npm run test:jest && npm run test:allure"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.65.0",
+    "@types/jest": "^30.0.0",
     "@types/node": "^26.6.6",
     "allure-commandline": "^2.46.1",
     "allure-js-commons": "^3.14.0",
     "allure-playwright": "^3.14.0",
     "dotenv": "^18.0.10",
     "eslint": "^10.14.0",
-    "prettier": "^3.9.10"
+    "jest": "^30.5.2",
+    "prettier": "^3.9.10",
+    "ts-jest": "^29.4.15",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

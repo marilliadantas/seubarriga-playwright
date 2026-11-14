@@ -10,7 +10,7 @@ test.describe('Cadastro', () => {
     await allure.feature('Cadastro');
   });
 
-  test('Test Case 001: Cadastrar usuário e fazer login @Smoke @Regression', async ({ loginPage, registerPage, data }) => {
+  test('Test Case 001: Cadastrar usuário e fazer login', async ({ loginPage, registerPage, data }) => {
     const user = buildUser(data.ValidUser, 'register');
 
     await registerPage.createAccount(user);

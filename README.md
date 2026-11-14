@@ -31,8 +31,6 @@ npm run test:jest         # Jest: unitários + API
 npm run test:unit         # só unitários
 npm run test:api          # só API
 npm run test:stg          # UI no ambiente Stg
-npm run test:smoke        # apenas @Smoke
-npm run test:regression   # apenas @Regression
 ```
 
 ## Report Allure (requer Java)

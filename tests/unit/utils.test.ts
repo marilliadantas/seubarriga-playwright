@@ -1,4 +1,4 @@
-import { loadData, uniqueEmail } from '../../resources/support/utils';
+import { buildUser, loadData, uniqueEmail } from '../../resources/support/utils';
 import { resolveEnv } from '../../resources/support/env';
 
 describe('utils', () => {
@@ -19,6 +19,16 @@ describe('utils', () => {
       const second = uniqueEmail();
       jest.useRealTimers();
       expect(first).not.toBe(second);
+    });
+  });
+
+  describe('buildUser', () => {
+    it('mantém os dados do modelo e gera e-mail único', () => {
+      const template = { Name: 'Teste QA', Email: 'fixo@example.com', Password: 'Senha@123' };
+      const user = buildUser(template, 'login');
+
+      expect(user).toEqual({ Name: 'Teste QA', Email: expect.stringMatching(/^login\.\d+@example\.com$/), Password: 'Senha@123' });
+      expect(template.Email).toBe('fixo@example.com');
     });
   });
 

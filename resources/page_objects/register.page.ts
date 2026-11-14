@@ -1,6 +1,7 @@
 import type { Page } from '@playwright/test';
 import { registerLocators } from '../locators/register.locators';
 import { step, validateAndFill, validateAndClick, validateText } from '../support/actions';
+import type { UserData } from '../support/utils';
 
 export class RegisterPage {
   readonly el: ReturnType<typeof registerLocators>;
@@ -24,5 +25,12 @@ export class RegisterPage {
 
   async shouldRegisterSuccessfully(text: string) {
     await step('Then the user should be registered', () => validateText(this.el.successMessage, text));
+  }
+
+  // Fluxo completo: abre o cadastro, cria o usuário e valida o sucesso
+  async createAccount(user: UserData) {
+    await this.navigate();
+    await this.register(user.Name, user.Email, user.Password);
+    await this.shouldRegisterSuccessfully('Usuário inserido com sucesso');
   }
 }

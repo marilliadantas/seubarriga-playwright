@@ -1,9 +1,10 @@
 // Fixtures base: Open Website / Close Website (hooks de Setup e Teardown)
 import { test as baseTest, expect } from '@playwright/test';
 import { LoginPage } from '../page_objects/login.page';
+import { RegisterPage } from '../page_objects/register.page';
 import { loadData, type TestData } from './utils';
 
-export const test = baseTest.extend<{ data: TestData; loginPage: LoginPage }>({
+export const test = baseTest.extend<{ data: TestData; loginPage: LoginPage; registerPage: RegisterPage }>({
   // eslint-disable-next-line no-empty-pattern
   data: async ({}, use) => {
     await use(loadData());
@@ -13,6 +14,10 @@ export const test = baseTest.extend<{ data: TestData; loginPage: LoginPage }>({
     const loginPage = new LoginPage(page);
     await loginPage.navigate(); // Open Website
     await use(loginPage);
+  },
+
+  registerPage: async ({ page }, use) => {
+    await use(new RegisterPage(page));
   },
 });
 

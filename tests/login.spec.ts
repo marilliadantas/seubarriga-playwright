@@ -1,7 +1,6 @@
 import * as allure from 'allure-js-commons';
 import { test, expect } from '../resources/support/base';
-import { RegisterPage } from '../resources/page_objects/register.page';
-import { uniqueEmail } from '../resources/support/utils';
+import { buildUser } from '../resources/support/utils';
 
 test.describe('Autenticação', () => {
   test.beforeEach(async () => {
@@ -20,18 +19,13 @@ test.describe('Autenticação', () => {
     await loginPage.shouldSeeMessage('error', 'Problemas com o login do usuário');
   });
 
-  test('Test Case 003: Login com sucesso @Smoke @Regression', async ({ page, loginPage, data }) => {
-    const user = { name: data.ValidUser.Name, email: uniqueEmail('login'), password: data.ValidUser.Password };
+  test('Test Case 003: Login com sucesso @Smoke @Regression', async ({ loginPage, registerPage, data }) => {
+    const user = buildUser(data.ValidUser, 'login');
 
-    // Pré-condição: cria um usuário novo
-    const registerPage = new RegisterPage(page);
-    await registerPage.navigate();
-    await registerPage.register(user.name, user.email, user.password);
-    await registerPage.shouldRegisterSuccessfully('Usuário inserido com sucesso');
-
+    await registerPage.createAccount(user);
     await loginPage.navigate();
-    await loginPage.login(user.email, user.password);
-    await loginPage.shouldSeeMessage('success', `Bem vindo, ${user.name}!`);
+    await loginPage.login(user.Email, user.Password);
+    await loginPage.shouldSeeMessage('success', `Bem vindo, ${user.Name}!`);
   });
 
   test('Test Case 004: Login com sucesso com usuário existente @Smoke @Regression', async ({ loginPage, data }) => {

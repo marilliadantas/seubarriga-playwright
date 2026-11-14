@@ -12,3 +12,9 @@ export type TestData = {
 export const loadData = (env: EnvName = ENV): TestData => (rawData as Record<EnvName, TestData>)[env];
 
 export const uniqueEmail = (prefix = 'qa'): string => `${prefix}.${Date.now()}@example.com`;
+
+// Cria um usuário novo a partir de um modelo, com e-mail único
+export const buildUser = (template: UserData, prefix = 'qa'): UserData => ({
+  ...template,
+  Email: uniqueEmail(prefix),
+});

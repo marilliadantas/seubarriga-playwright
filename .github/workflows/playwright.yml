@@ -4,6 +4,13 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
 jobs:
   test:
     timeout-minutes: 60
@@ -43,3 +50,20 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+    - name: Upload Allure report for GitHub Pages
+      if: ${{ !cancelled() && github.event_name == 'push' }}
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: allure-report/
+  deploy:
+    # Publica o Allure no GitHub Pages apenas em push na main
+    if: ${{ !cancelled() && github.event_name == 'push' }}
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

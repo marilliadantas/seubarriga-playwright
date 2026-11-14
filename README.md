@@ -39,3 +39,9 @@ npm run allure:generate   # gera allure-report/
 npm run allure:open       # abre o report
 npm run allure:serve      # gera e abre direto de allure-results/
 ```
+
+## Allure no GitHub Pages
+A cada push na `main`, o CI roda os testes e publica o report em:
+https://marilliadantas.github.io/seubarriga-playwright/
+
+Configuração única (precisa de admin do repo): **Settings > Pages > Build and deployment > Source: GitHub Actions**.

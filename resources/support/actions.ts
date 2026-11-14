@@ -1,24 +1,22 @@
 // Keywords de interação com a aplicação (equivalente ao actions.resource)
-const { expect } = require('@playwright/test');
-const allure = require('allure-js-commons');
+import { expect, type Locator } from '@playwright/test';
+import * as allure from 'allure-js-commons';
 
-const step = (name, body) => allure.step(name, body);
+export const step = <T>(name: string, body: () => Promise<T>): Promise<T> => Promise.resolve(allure.step(name, body));
 
-const validateAndFill = (locator, value) =>
+export const validateAndFill = (locator: Locator, value: string) =>
   step(`Preencher campo com "${value}"`, async () => {
     await expect(locator).toBeVisible();
     await locator.fill(value);
   });
 
-const validateAndClick = (locator) =>
+export const validateAndClick = (locator: Locator) =>
   step('Clicar no elemento', async () => {
     await expect(locator).toBeVisible();
     await locator.click();
   });
 
-const validateText = (locator, text) =>
+export const validateText = (locator: Locator, text: string) =>
   step(`Validar texto "${text}"`, async () => {
     await expect(locator).toContainText(text);
   });
-
-module.exports = { step, validateAndFill, validateAndClick, validateText };

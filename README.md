@@ -1,4 +1,4 @@
-# Seu Barriga - Automação com Playwright
+# Seu Barriga - Automação com Playwright + TypeScript + Jest
 
 Mesma arquitetura do `site-ecom-e2e` (locators, page_objects, support, variables, evidence), adaptada para Playwright + Allure.
 
@@ -13,12 +13,25 @@ Mesma arquitetura do `site-ecom-e2e` (locators, page_objects, support, variables
 | `resources/support/utils.js` | Funções auxiliares |
 | `resources/variables` | Massa de dados por ambiente |
 | `evidence` | Screenshots e artefatos de execução (ignorado no git) |
-| `tests` | Cenários de teste |
+| `tests/*.spec.ts` | Testes de UI (Playwright) |
+| `tests/unit` | Testes unitários dos helpers (Jest) |
+| `tests/api` | Testes de API do Seu Barriga (Jest) |
+
+## Onde cada ferramenta é usada
+| Ferramenta | Escopo | Arquivos |
+|---|---|---|
+| Playwright | Testes de UI (E2E) com report Allure | `tests/*.spec.ts` |
+| Jest + ts-jest | Testes de API (`POST /signin`) e unitários (`utils`, `env`, massa de dados) | `tests/api`, `tests/unit` |
+| TypeScript | Todo o projeto, modo `strict` | `tsconfig.json` |
 
 ## Execução
 ```bash
 npm ci && npx playwright install chromium
-npm run test:stg          # ambiente Stg
+npm run typecheck         # checagem de tipos
+npm run test:jest         # Jest: unitários + API
+npm run test:unit         # só unitários
+npm run test:api          # só API
+npm run test:stg          # UI no ambiente Stg
 npm run test:smoke        # apenas @Smoke
 npm run test:regression   # apenas @Regression
 ```

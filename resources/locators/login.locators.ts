@@ -1,5 +1,7 @@
+import type { Page } from '@playwright/test';
+
 // Elementos da tela de login
-module.exports = (page) => ({
+export const loginLocators = (page: Page) => ({
   emailInput: page.locator('input[id="email"]'),
   passwordInput: page.locator('input[id="senha"]'),
   loginButton: page.locator('button[type="submit"]'),

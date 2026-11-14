@@ -1,5 +1,7 @@
+import type { Page } from '@playwright/test';
+
 // Elementos da tela de cadastro
-module.exports = (page) => ({
+export const registerLocators = (page: Page) => ({
   nameInput: page.locator('input[id="nome"]'),
   emailInput: page.locator('input[id="email"]'),
   passwordInput: page.locator('input[id="senha"]'),

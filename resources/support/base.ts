@@ -1,10 +1,13 @@
 // Fixtures base: Open Website / Close Website (hooks de Setup e Teardown)
-const base = require('@playwright/test');
-const { LoginPage } = require('../page_objects/login.page');
-const { loadData } = require('./utils');
+import { test as baseTest, expect } from '@playwright/test';
+import { LoginPage } from '../page_objects/login.page';
+import { loadData, type TestData } from './utils';
 
-exports.test = base.test.extend({
-  data: async ({}, use) => use(loadData()),
+export const test = baseTest.extend<{ data: TestData; loginPage: LoginPage }>({
+  // eslint-disable-next-line no-empty-pattern
+  data: async ({}, use) => {
+    await use(loadData());
+  },
 
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
@@ -14,10 +17,10 @@ exports.test = base.test.extend({
 });
 
 // Close Website: screenshot de evidência ao final de cada teste
-exports.test.afterEach(async ({ page }, testInfo) => {
+test.afterEach(async ({ page }, testInfo) => {
   const file = testInfo.outputPath('evidence.png');
   await page.screenshot({ path: file, fullPage: true });
   await testInfo.attach('evidence', { path: file, contentType: 'image/png' });
 });
 
-exports.expect = base.expect;
+export { expect };

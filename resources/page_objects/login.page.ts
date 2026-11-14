@@ -1,9 +1,13 @@
-const loginLocators = require('../locators/login.locators');
-const { step, validateAndFill, validateAndClick, validateText } = require('../support/actions');
+import type { Page } from '@playwright/test';
+import { loginLocators } from '../locators/login.locators';
+import { step, validateAndFill, validateAndClick, validateText } from '../support/actions';
 
-class LoginPage {
-  constructor(page) {
-    this.page = page;
+export type MessageType = 'error' | 'success';
+
+export class LoginPage {
+  readonly el: ReturnType<typeof loginLocators>;
+
+  constructor(readonly page: Page) {
     this.el = loginLocators(page);
   }
 
@@ -11,7 +15,7 @@ class LoginPage {
     await step("Given I'm on the login page", () => this.page.goto('/login'));
   }
 
-  async login(email, password) {
+  async login(email: string, password: string) {
     await step('When I fill in the login form', async () => {
       await validateAndFill(this.el.emailInput, email);
       await validateAndFill(this.el.passwordInput, password);
@@ -19,11 +23,8 @@ class LoginPage {
     });
   }
 
-  // type: 'error' | 'success'
-  async shouldSeeMessage(type, text) {
+  async shouldSeeMessage(type: MessageType, text: string) {
     const message = type === 'error' ? this.el.errorMessage : this.el.successMessage;
     await step(`Then I should see the ${type} message "${text}"`, () => validateText(message, text));
   }
 }
-
-module.exports = { LoginPage };

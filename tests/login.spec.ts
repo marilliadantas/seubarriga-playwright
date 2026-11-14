@@ -1,7 +1,7 @@
-const { test, expect } = require('../resources/support/base');
-const allure = require('allure-js-commons');
-const { RegisterPage } = require('../resources/page_objects/register.page');
-const { uniqueEmail } = require('../resources/support/utils');
+import * as allure from 'allure-js-commons';
+import { test, expect } from '../resources/support/base';
+import { RegisterPage } from '../resources/page_objects/register.page';
+import { uniqueEmail } from '../resources/support/utils';
 
 test.describe('Autenticação', () => {
   test.beforeEach(async () => {

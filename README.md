@@ -7,7 +7,6 @@ Mesma arquitetura do `site-ecom-e2e` (locators, page_objects, support, variables
 |---|---|
 | `resources/locators` | Seletores dos elementos por tela |
 | `resources/page_objects` | Page Objects com as keywords de cada página (Given/When/Then) |
-| `resources/support/actions.js` | Keywords de interação (preencher, clicar, validar) com steps do Allure |
 | `resources/support/base.js` | Fixtures: Open Website / Close Website (evidência) |
 | `resources/support/env.js` | Ambientes `Stg` / `Prd` (variável `ENV`) |
 | `resources/support/utils.js` | Funções auxiliares |

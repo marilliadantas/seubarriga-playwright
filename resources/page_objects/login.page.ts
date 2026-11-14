@@ -1,6 +1,6 @@
-import type { Page } from '@playwright/test';
+import { expect, type Page } from '@playwright/test';
+import * as allure from 'allure-js-commons';
 import { loginLocators } from '../locators/login.locators';
-import { step, validateAndFill, validateAndClick, validateText } from '../support/actions';
 
 export type MessageType = 'error' | 'success';
 
@@ -12,19 +12,19 @@ export class LoginPage {
   }
 
   async navigate() {
-    await step("Given I'm on the login page", () => this.page.goto('/login'));
+    await allure.step("Given I'm on the login page", () => this.page.goto('/login'));
   }
 
   async login(email: string, password: string) {
-    await step('When I fill in the login form', async () => {
-      await validateAndFill(this.el.emailInput, email);
-      await validateAndFill(this.el.passwordInput, password);
-      await validateAndClick(this.el.loginButton);
+    await allure.step('When I fill in the login form', async () => {
+      await this.el.emailInput.fill(email);
+      await this.el.passwordInput.fill(password);
+      await this.el.loginButton.click();
     });
   }
 
   async shouldSeeMessage(type: MessageType, text: string) {
     const message = type === 'error' ? this.el.errorMessage : this.el.successMessage;
-    await step(`Then I should see the ${type} message "${text}"`, () => validateText(message, text));
+    await allure.step(`Then I should see the ${type} message "${text}"`, () => expect(message).toContainText(text));
   }
 }

@@ -1,6 +1,6 @@
-import type { Page } from '@playwright/test';
+import { expect, type Page } from '@playwright/test';
+import * as allure from 'allure-js-commons';
 import { registerLocators } from '../locators/register.locators';
-import { step, validateAndFill, validateAndClick, validateText } from '../support/actions';
 import type { UserData } from '../support/utils';
 
 export class RegisterPage {
@@ -11,20 +11,20 @@ export class RegisterPage {
   }
 
   async navigate() {
-    await step("Given I'm on the register page", () => this.page.goto('/cadastro'));
+    await allure.step("Given I'm on the register page", () => this.page.goto('/cadastro'));
   }
 
   async register(name: string, email: string, password: string) {
-    await step('When I fill in the register form', async () => {
-      await validateAndFill(this.el.nameInput, name);
-      await validateAndFill(this.el.emailInput, email);
-      await validateAndFill(this.el.passwordInput, password);
-      await validateAndClick(this.el.registerButton);
+    await allure.step('When I fill in the register form', async () => {
+      await this.el.nameInput.fill(name);
+      await this.el.emailInput.fill(email);
+      await this.el.passwordInput.fill(password);
+      await this.el.registerButton.click();
     });
   }
 
   async shouldRegisterSuccessfully(text: string) {
-    await step('Then the user should be registered', () => validateText(this.el.successMessage, text));
+    await allure.step('Then the user should be registered', () => expect(this.el.successMessage).toContainText(text));
   }
 
   // Fluxo completo: abre o cadastro, cria o usuário e valida o sucesso

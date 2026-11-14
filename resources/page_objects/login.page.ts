@@ -24,7 +24,12 @@ export class LoginPage {
   }
 
   async shouldSeeMessage(type: MessageType, text: string) {
-    const message = type === 'error' ? this.el.errorMessage : this.el.successMessage;
+    let message = this.el.successMessage;
+
+    if (type === 'error') {
+      message = this.el.errorMessage;
+    }
+
     await allure.step(`Then I should see the ${type} message "${text}"`, () => expect(message).toContainText(text));
   }
 }

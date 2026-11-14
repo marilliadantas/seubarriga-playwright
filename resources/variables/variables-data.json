@@ -8,11 +8,6 @@
     "InvalidUser": {
       "Email": "invalido@example.com",
       "Password": "senhaErrada"
-    },
-    "ExistingUser": {
-      "Name": "thiago",
-      "Email": "teste@teste.com",
-      "Password": "123456"
     }
   },
   "Prd": {
@@ -24,11 +19,6 @@
     "InvalidUser": {
       "Email": "invalido@example.com",
       "Password": "senhaErrada"
-    },
-    "ExistingUser": {
-      "Name": "thiago",
-      "Email": "teste@teste.com",
-      "Password": "123456"
     }
   }
 }

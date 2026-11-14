@@ -26,6 +26,7 @@ Mesma arquitetura do `site-ecom-e2e` (locators, page_objects, support, variables
 ## Execução
 ```bash
 npm ci && npx playwright install chromium
+cp .env.example .env      # preencha as credenciais do usuário existente
 npm run typecheck         # checagem de tipos
 npm run test:jest         # Jest: unitários + API
 npm run test:unit         # só unitários

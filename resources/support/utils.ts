@@ -1,15 +1,27 @@
 // Funções auxiliares e carga de dados por ambiente
 import rawData from '../variables/variables-data.json';
-import { ENV, type EnvName } from './env';
+import { ENV, requireEnv, type EnvName } from './env';
 
 export type UserData = { Name: string; Email: string; Password: string };
-export type TestData = {
+
+type FileData = {
   ValidUser: UserData;
-  ExistingUser: UserData;
   InvalidUser: Pick<UserData, 'Email' | 'Password'>;
 };
 
-export const loadData = (env: EnvName = ENV): TestData => (rawData as Record<EnvName, TestData>)[env];
+export type TestData = FileData & { ExistingUser: UserData };
+
+// Usuário existente: credenciais vêm do .env (ou secrets do CI), nunca do git
+export const getExistingUser = (): UserData => ({
+  Name: requireEnv('EXISTING_USER_NAME'),
+  Email: requireEnv('EXISTING_USER_EMAIL'),
+  Password: requireEnv('EXISTING_USER_PASSWORD'),
+});
+
+export const loadData = (env: EnvName = ENV): TestData => ({
+  ...(rawData as Record<EnvName, FileData>)[env],
+  ExistingUser: getExistingUser(),
+});
 
 export const uniqueEmail = (prefix = 'qa'): string => `${prefix}.${Date.now()}@example.com`;
 

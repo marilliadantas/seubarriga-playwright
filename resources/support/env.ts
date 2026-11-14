@@ -18,3 +18,14 @@ export const resolveEnv = (name: string = 'Stg') => {
 };
 
 export const { ENV, baseUrl, apiUrl } = resolveEnv(process.env.ENV);
+
+// Lê uma variável obrigatória (.env local ou secrets do CI) e falha com mensagem clara se faltar
+export const requireEnv = (name: string): string => {
+  const value = process.env[name];
+
+  if (!value) {
+    throw new Error(`Variável ${name} não definida. Copie .env.example para .env e preencha.`);
+  }
+
+  return value;
+};

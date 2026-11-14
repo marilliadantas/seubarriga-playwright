@@ -15,6 +15,11 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      ENV: Stg
+      EXISTING_USER_NAME: ${{ secrets.EXISTING_USER_NAME }}
+      EXISTING_USER_EMAIL: ${{ secrets.EXISTING_USER_EMAIL }}
+      EXISTING_USER_PASSWORD: ${{ secrets.EXISTING_USER_PASSWORD }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4

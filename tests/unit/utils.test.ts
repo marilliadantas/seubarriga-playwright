@@ -1,5 +1,5 @@
-import { buildUser, loadData, uniqueEmail } from '../../resources/support/utils';
-import { resolveEnv } from '../../resources/support/env';
+import { buildUser, getExistingUser, loadData, uniqueEmail } from '../../resources/support/utils';
+import { requireEnv, resolveEnv } from '../../resources/support/env';
 
 describe('utils', () => {
   describe('uniqueEmail', () => {
@@ -36,7 +36,7 @@ describe('utils', () => {
     it.each(['Stg', 'Prd'] as const)('retorna a massa completa do ambiente %s', (env) => {
       const data = loadData(env);
       expect(data.ValidUser).toEqual(expect.objectContaining({ Name: expect.any(String), Email: expect.any(String) }));
-      expect(data.ExistingUser.Email).toBe('teste@teste.com');
+      expect(data.ExistingUser).toEqual(getExistingUser());
       expect(data.InvalidUser).toHaveProperty('Password');
     });
   });
@@ -55,5 +55,20 @@ describe('resolveEnv', () => {
 
   it('rejeita ambiente inválido', () => {
     expect(() => resolveEnv('Dev')).toThrow(/ENV inválido/);
+  });
+});
+
+describe('requireEnv', () => {
+  afterEach(() => {
+    delete process.env.VARIAVEL_DE_TESTE;
+  });
+
+  it('retorna o valor da variável definida', () => {
+    process.env.VARIAVEL_DE_TESTE = 'abc';
+    expect(requireEnv('VARIAVEL_DE_TESTE')).toBe('abc');
+  });
+
+  it('falha com mensagem clara quando a variável não existe', () => {
+    expect(() => requireEnv('VARIAVEL_DE_TESTE')).toThrow(/VARIAVEL_DE_TESTE não definida/);
   });
 });

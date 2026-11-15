@@ -1,4 +1,5 @@
-// Fixtures base: Open Website / Close Website (hooks de Setup e Teardown)
+// Fixtures base: criam page objects e dados. Cada spec abre sua página inicial em um beforeEach.
+// Close Website: o afterEach abaixo anexa a evidência.
 import { test as baseTest, expect } from '@playwright/test';
 import { LoginPage } from '../page_objects/login.page';
 import { RegisterPage } from '../page_objects/register.page';
@@ -11,15 +12,11 @@ export const test = baseTest.extend<{ data: TestData; loginPage: LoginPage; regi
   },
 
   loginPage: async ({ page }, use) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.navigate(); // Open Website
-    await use(loginPage);
+    await use(new LoginPage(page));
   },
 
   registerPage: async ({ page }, use) => {
-    const registerPage = new RegisterPage(page);
-    await registerPage.navigate(); // Open Website
-    await use(registerPage);
+    await use(new RegisterPage(page));
   },
 });
 

@@ -3,9 +3,10 @@ import { test, expect } from '../resources/support/base';
 
 // Os testes de login usam apenas o usuário existente: não criam dados no banco.
 test.describe('Autenticação', () => {
-  test.beforeEach(async () => {
+  test.beforeEach(async ({ loginPage }) => {
     await allure.epic('Seu Barriga');
     await allure.feature('Autenticação');
+    await loginPage.navigate();
   });
 
   test('Test Case 001: Deve apresentar a página de login', async ({ page, loginPage }) => {

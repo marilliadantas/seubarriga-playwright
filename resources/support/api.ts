@@ -1,13 +1,10 @@
-// Seu Barriga API client (reusable in any Jest test)
-import { apiUrl } from './env';
+// Seu Barriga API client (reusable in any API test)
+import type { APIRequestContext } from '@playwright/test';
 
 export type Credentials = { email: string; senha: string };
 
 // Optional fields: omitting one lets us validate the alternative paths.
 // "senha" is the field name the API expects (it means password).
-export const signin = (credentials: Partial<Credentials> = {}) =>
-  fetch(`${apiUrl}/signin`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(credentials),
-  });
+// The base URL comes from the "api" project in playwright.config.ts.
+export const signin = (request: APIRequestContext, credentials: Partial<Credentials> = {}) =>
+  request.post('/signin', { data: credentials });

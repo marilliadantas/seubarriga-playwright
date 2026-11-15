@@ -1,5 +1,5 @@
 import * as allure from 'allure-js-commons';
-import { test, expect } from '../resources/support/base';
+import { test, expect } from '../../resources/support/base';
 
 // Login tests only use the existing user: they do not create data in the database.
 test.describe('Authentication', () => {

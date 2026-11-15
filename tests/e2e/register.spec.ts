@@ -1,6 +1,6 @@
 import * as allure from 'allure-js-commons';
-import { test } from '../resources/support/base';
-import { buildUser } from '../resources/support/utils';
+import { test } from '../../resources/support/base';
+import { buildUser } from '../../resources/support/utils';
 
 // The only test that creates a user in the database (the API cannot delete users).
 // It is independent: it generates its own unique email and does not reuse data from other tests.

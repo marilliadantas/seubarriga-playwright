@@ -29,11 +29,9 @@ jobs:
       run: npm ci
     - name: Typecheck
       run: npm run typecheck
-    - name: Run Jest (unit + API)
-      run: npm run test:jest
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
+      run: npx playwright install --with-deps chromium
+    - name: Run Playwright tests (unit, API and e2e)
       run: npx playwright test
     - uses: actions/setup-java@v4
       if: ${{ !cancelled() }}

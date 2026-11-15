@@ -1,9 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
-import { baseUrl } from './resources/support/env';
+import { apiUrl, baseUrl } from './resources/support/env';
 
 export default defineConfig({
   testDir: './tests',
-  testMatch: '**/*.spec.ts',
   outputDir: './evidence/test-results',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
@@ -15,7 +14,6 @@ export default defineConfig({
     ['allure-playwright', { resultsDir: 'allure-results', detail: true }],
   ],
   use: {
-    baseURL: baseUrl,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -24,8 +22,21 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      // UI tests in the browser
+      name: 'e2e',
+      testMatch: 'e2e/**/*.spec.ts',
+      use: { ...devices['Desktop Chrome'], baseURL: baseUrl },
+    },
+    {
+      // API tests, no browser
+      name: 'api',
+      testMatch: 'api/**/*.spec.ts',
+      use: { baseURL: apiUrl },
+    },
+    {
+      // Unit tests for the helpers, no browser
+      name: 'unit',
+      testMatch: 'unit/**/*.spec.ts',
     },
   ],
 });

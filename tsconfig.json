@@ -7,8 +7,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "jest"],
+    "types": ["node"],
     "noEmit": true
   },
-  "include": ["resources", "tests", "playwright.config.ts", "jest.config.ts"]
+  "include": ["resources", "tests", "playwright.config.ts"]
 }

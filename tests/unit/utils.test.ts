@@ -1,5 +1,11 @@
 import { buildUser, getExistingUser, loadData, uniqueEmail } from '../../resources/support/utils';
 import { requireEnv, resolveEnv } from '../../resources/support/env';
+import * as allure from 'allure-js-commons';
+
+beforeEach(async () => {
+  await allure.epic('Seu Barriga');
+  await allure.feature('Unit');
+});
 
 describe('utils', () => {
   describe('uniqueEmail', () => {

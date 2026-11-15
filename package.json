@@ -16,12 +16,13 @@
     "allure:generate": "allure generate allure-results --clean -o allure-report",
     "allure:open": "allure open allure-report",
     "allure:serve": "allure serve allure-results",
-    "test:allure": "playwright test; allure generate allure-results --clean -o allure-report",
+    "test:allure": "npm run allure:clean; jest; playwright test; allure generate allure-results --clean -o allure-report",
     "test:jest": "jest",
     "test:unit": "jest tests/unit",
     "test:api": "jest tests/api",
     "typecheck": "tsc --noEmit",
-    "test:all": "npm run typecheck && npm run test:jest && npm run test:allure"
+    "test:all": "npm run typecheck && npm run test:jest && npm run test:allure",
+    "allure:clean": "rm -rf allure-results allure-report"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^26.6.6",
     "allure-commandline": "^2.46.1",
+    "allure-jest": "^3.14.0",
     "allure-js-commons": "^3.14.0",
     "allure-playwright": "^3.14.0",
     "dotenv": "^18.0.10",

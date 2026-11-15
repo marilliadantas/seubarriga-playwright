@@ -20,7 +20,7 @@ Mesma arquitetura do `site-ecom-e2e` (locators, page_objects, support, variables
 | Ferramenta | Escopo | Arquivos |
 |---|---|---|
 | Playwright | Testes de UI (E2E) com report Allure | `tests/*.spec.ts` |
-| Jest + ts-jest | Testes de API (`POST /signin`) e unitários (`utils`, `env`, massa de dados) | `tests/api`, `tests/unit` |
+| Jest + ts-jest | Testes de API (`POST /signin`) e unitários (`utils`, `env`, massa de dados). Também aparecem no Allure | `tests/api`, `tests/unit` |
 | TypeScript | Todo o projeto, modo `strict` | `tsconfig.json` |
 
 ## Execução

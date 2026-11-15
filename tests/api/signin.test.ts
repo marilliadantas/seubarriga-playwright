@@ -1,9 +1,15 @@
+import * as allure from 'allure-js-commons';
 import { signin } from '../../resources/support/api';
 import { loadData } from '../../resources/support/utils';
 
 // Testes de API do Seu Barriga (POST /signin), executados com Jest.
 describe('POST /signin', () => {
   const { ExistingUser, InvalidUser } = loadData();
+
+  beforeEach(async () => {
+    await allure.epic('Seu Barriga');
+    await allure.feature('API');
+  });
 
   it('autentica usuário existente e retorna token', async () => {
     const response = await signin({ email: ExistingUser.Email, senha: ExistingUser.Password });

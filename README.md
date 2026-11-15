@@ -1,48 +1,50 @@
-# Seu Barriga - Automação com Playwright + TypeScript + Jest
+# Seu Barriga - Automation with Playwright + TypeScript + Jest
 
-Mesma arquitetura do `site-ecom-e2e` (locators, page_objects, support, variables, evidence), adaptada para Playwright + Allure.
+Same architecture as `site-ecom-e2e` (locators, page_objects, support, variables, evidence), adapted to Playwright + Allure.
 
-## Estrutura
-| Diretório | Finalidade |
+## Structure
+| Directory | Purpose |
 |---|---|
-| `resources/locators` | Seletores dos elementos por tela |
-| `resources/page_objects` | Page Objects com as keywords de cada página (Given/When/Then) |
-| `resources/support/base.js` | Fixtures: Open Website / Close Website (evidência) |
-| `resources/support/env.js` | Ambientes `Stg` / `Prd` (variável `ENV`) |
-| `resources/support/utils.js` | Funções auxiliares |
-| `resources/variables` | Massa de dados por ambiente |
-| `evidence` | Screenshots e artefatos de execução (ignorado no git) |
-| `tests/*.spec.ts` | Testes de UI (Playwright) |
-| `tests/unit` | Testes unitários dos helpers (Jest) |
-| `tests/api` | Testes de API do Seu Barriga (Jest) |
+| `resources/locators` | Element locators per page |
+| `resources/page_objects` | Page Objects with the keywords of each page (Given/When/Then) |
+| `resources/support/base.ts` | Fixtures: page objects and test data, plus the evidence screenshot (Close Website) |
+| `resources/support/env.ts` | `Stg` / `Prd` environments (`ENV` variable) and required variables |
+| `resources/support/api.ts` | API client used by the Jest API tests |
+| `resources/support/utils.ts` | Helper functions and data loading |
+| `resources/variables` | Test data per environment |
+| `evidence` | Screenshots and execution artifacts (ignored by git) |
+| `tests/*.spec.ts` | UI tests (Playwright) |
+| `tests/unit` | Unit tests for the helpers (Jest) |
+| `tests/api` | Seu Barriga API tests (Jest) |
 
-## Onde cada ferramenta é usada
-| Ferramenta | Escopo | Arquivos |
+## Where each tool is used
+| Tool | Scope | Files |
 |---|---|---|
-| Playwright | Testes de UI (E2E) com report Allure | `tests/*.spec.ts` |
-| Jest + ts-jest | Testes de API (`POST /signin`) e unitários (`utils`, `env`, massa de dados). Também aparecem no Allure | `tests/api`, `tests/unit` |
-| TypeScript | Todo o projeto, modo `strict` | `tsconfig.json` |
+| Playwright | UI (E2E) tests with the Allure report | `tests/*.spec.ts` |
+| Jest + ts-jest | API tests (`POST /signin`) and unit tests (`utils`, `env`, test data). They also appear in Allure | `tests/api`, `tests/unit` |
+| TypeScript | Whole project, `strict` mode | `tsconfig.json` |
 
-## Execução
+## Running
 ```bash
 npm ci && npx playwright install chromium
-cp .env.example .env      # preencha as credenciais do usuário existente
-npm run typecheck         # checagem de tipos
-npm run test:jest         # Jest: unitários + API
-npm run test:unit         # só unitários
-npm run test:api          # só API
-npm run test:stg          # UI no ambiente Stg
+cp .env.example .env      # fill in the existing user credentials
+npm run typecheck         # type check
+npm run test:jest         # Jest: unit + API
+npm run test:unit         # unit only
+npm run test:api          # API only
+npm run test:stg          # UI on the Stg environment
+npm run test:allure       # Jest + Playwright + Allure report
 ```
 
-## Report Allure (requer Java)
+## Allure report (requires Java)
 ```bash
-npm run allure:generate   # gera allure-report/
-npm run allure:open       # abre o report
-npm run allure:serve      # gera e abre direto de allure-results/
+npm run allure:generate   # generates allure-report/
+npm run allure:open       # opens the report
+npm run allure:serve      # generates and opens straight from allure-results/
 ```
 
-## Allure no GitHub Pages
-A cada push na `main`, o CI roda os testes e publica o report em:
+## Allure on GitHub Pages
+On every push to `main`, the CI runs the tests and publishes the report at:
 https://marilliadantas.github.io/seubarriga-playwright/
 
-Configuração única (precisa de admin do repo): **Settings > Pages > Build and deployment > Source: GitHub Actions**.
+One-time setup (requires repo admin): **Settings > Pages > Build and deployment > Source: GitHub Actions**.

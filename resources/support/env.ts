@@ -1,4 +1,4 @@
-// Variáveis de ambiente (Stg | Prd). Selecionado via ENV=Stg|Prd
+// Environment variables (Stg | Prd). Selected through ENV=Stg|Prd
 import dotenv from 'dotenv';
 
 dotenv.config({ quiet: true });
@@ -12,19 +12,19 @@ const environments: Record<EnvName, { baseUrl: string; apiUrl: string }> = {
 
 export const resolveEnv = (name: string = 'Stg') => {
   if (!(name in environments)) {
-    throw new Error(`ENV inválido: "${name}". Use: ${Object.keys(environments).join(', ')}`);
+    throw new Error(`Invalid ENV: "${name}". Use: ${Object.keys(environments).join(', ')}`);
   }
   return { ENV: name as EnvName, ...environments[name as EnvName] };
 };
 
 export const { ENV, baseUrl, apiUrl } = resolveEnv(process.env.ENV);
 
-// Lê uma variável obrigatória (.env local ou secrets do CI) e falha com mensagem clara se faltar
+// Reads a required variable (local .env or CI secrets) and fails with a clear message if it is missing
 export const requireEnv = (name: string): string => {
   const value = process.env[name];
 
   if (!value) {
-    throw new Error(`Variável ${name} não definida. Copie .env.example para .env e preencha.`);
+    throw new Error(`Variable ${name} is not set. Copy .env.example to .env and fill it in.`);
   }
 
   return value;

@@ -2,7 +2,7 @@ import * as allure from 'allure-js-commons';
 import { signin } from '../../resources/support/api';
 import { loadData } from '../../resources/support/utils';
 
-// Testes de API do Seu Barriga (POST /signin), executados com Jest.
+// Seu Barriga API tests (POST /signin), run with Jest.
 describe('POST /signin', () => {
   const { ExistingUser, InvalidUser } = loadData();
 
@@ -11,7 +11,7 @@ describe('POST /signin', () => {
     await allure.feature('API');
   });
 
-  it('autentica usuário existente e retorna token', async () => {
+  it('authenticates an existing user and returns a token', async () => {
     const response = await signin({ email: ExistingUser.Email, senha: ExistingUser.Password });
 
     expect(response.status).toBe(200);
@@ -21,12 +21,12 @@ describe('POST /signin', () => {
   });
 
   it.each([
-    ['credenciais inválidas', { email: InvalidUser.Email, senha: InvalidUser.Password }],
-    ['senha incorreta', { email: ExistingUser.Email, senha: InvalidUser.Password }],
-    ['sem senha', { email: ExistingUser.Email }],
-    ['sem e-mail', { senha: ExistingUser.Password }],
-    ['corpo vazio', {}],
-  ])('rejeita login: %s', async (_cenario, credentials) => {
+    ['invalid credentials', { email: InvalidUser.Email, senha: InvalidUser.Password }],
+    ['wrong password', { email: ExistingUser.Email, senha: InvalidUser.Password }],
+    ['missing password', { email: ExistingUser.Email }],
+    ['missing email', { senha: ExistingUser.Password }],
+    ['empty body', {}],
+  ])('rejects login: %s', async (_scenario, credentials) => {
     const response = await signin(credentials);
 
     expect(response.status).toBeGreaterThanOrEqual(400);

@@ -1,4 +1,4 @@
-// Funções auxiliares e carga de dados por ambiente
+// Helper functions and per-environment data loading
 import rawData from '../variables/variables-data.json';
 import { ENV, requireEnv, type EnvName } from './env';
 
@@ -11,7 +11,7 @@ type FileData = {
 
 export type TestData = FileData & { ExistingUser: UserData };
 
-// Usuário existente: credenciais vêm do .env (ou secrets do CI), nunca do git
+// Existing user: credentials come from .env (or CI secrets), never from git
 export const getExistingUser = (): UserData => ({
   Name: requireEnv('EXISTING_USER_NAME'),
   Email: requireEnv('EXISTING_USER_EMAIL'),
@@ -25,7 +25,7 @@ export const loadData = (env: EnvName = ENV): TestData => ({
 
 export const uniqueEmail = (prefix = 'qa'): string => `${prefix}.${Date.now()}@example.com`;
 
-// Cria um usuário novo a partir de um modelo, com e-mail único
+// Creates a new user from a template, with a unique email
 export const buildUser = (template: UserData, prefix = 'qa'): UserData => ({
   ...template,
   Email: uniqueEmail(prefix),

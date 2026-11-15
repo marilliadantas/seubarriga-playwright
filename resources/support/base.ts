@@ -1,12 +1,11 @@
-// Fixtures base: criam page objects e dados. Cada spec abre sua página inicial em um beforeEach.
-// Close Website: o afterEach abaixo anexa a evidência.
+// Base fixtures: create page objects and data. Each spec opens its own start page in a beforeEach.
+// Close Website: the afterEach below attaches the evidence screenshot.
 import { test as baseTest, expect } from '@playwright/test';
 import { LoginPage } from '../page_objects/login.page';
 import { RegisterPage } from '../page_objects/register.page';
 import { loadData, type TestData } from './utils';
 
 export const test = baseTest.extend<{ data: TestData; loginPage: LoginPage; registerPage: RegisterPage }>({
-  // eslint-disable-next-line no-empty-pattern
   data: async ({}, use) => {
     await use(loadData());
   },
@@ -20,7 +19,7 @@ export const test = baseTest.extend<{ data: TestData; loginPage: LoginPage; regi
   },
 });
 
-// Close Website: screenshot de evidência ao final de cada teste
+// Close Website: full-page screenshot attached to the report after every test
 test.afterEach(async ({ page }, testInfo) => {
   const file = testInfo.outputPath('evidence.png');
   await page.screenshot({ path: file, fullPage: true });

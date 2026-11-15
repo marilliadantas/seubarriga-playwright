@@ -61,7 +61,7 @@ jobs:
       with:
         path: allure-report/
   deploy:
-    # Publica o Allure no GitHub Pages apenas em push na main
+    # Publishes the Allure report to GitHub Pages only on push to main
     if: ${{ !cancelled() && github.event_name == 'push' }}
     needs: test
     runs-on: ubuntu-latest

@@ -27,9 +27,10 @@ export class RegisterPage {
     await allure.step('Then the user should be registered', () => expect(this.el.successMessage).toContainText(text));
   }
 
-  // Fluxo completo: cria o usuário e valida o sucesso (a página já vem aberta pela fixture)
+  // Full flow: creates the user and validates success (the page is already opened by the spec hook)
   async createAccount(user: UserData) {
     await this.register(user.Name, user.Email, user.Password);
+    // Expected text is the Portuguese message shown by the application
     await this.shouldRegisterSuccessfully('Usuário inserido com sucesso');
   }
 }

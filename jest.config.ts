@@ -1,8 +1,8 @@
 import type { Config } from 'jest';
 
-// Jest cobre testes unitários (tests/unit) e de API (tests/api).
-// Os testes de UI (*.spec.ts) rodam no Playwright.
-// O ambiente allure-jest grava os resultados no mesmo allure-results usado pelo Playwright.
+// Jest covers unit tests (tests/unit) and API tests (tests/api).
+// UI tests (*.spec.ts) run on Playwright.
+// The allure-jest environment writes results to the same allure-results folder used by Playwright.
 const config: Config = {
   preset: 'ts-jest',
   testEnvironment: 'allure-jest/node',

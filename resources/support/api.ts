@@ -1,9 +1,10 @@
-// Cliente HTTP da API do Seu Barriga (reutilizável em qualquer teste Jest)
+// Seu Barriga API client (reusable in any Jest test)
 import { apiUrl } from './env';
 
 export type Credentials = { email: string; senha: string };
 
-// Campos opcionais: omitir um campo permite validar os caminhos alternativos.
+// Optional fields: omitting one lets us validate the alternative paths.
+// "senha" is the field name the API expects (it means password).
 export const signin = (credentials: Partial<Credentials> = {}) =>
   fetch(`${apiUrl}/signin`, {
     method: 'POST',

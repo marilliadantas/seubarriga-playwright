@@ -17,7 +17,9 @@ export const test = baseTest.extend<{ data: TestData; loginPage: LoginPage; regi
   },
 
   registerPage: async ({ page }, use) => {
-    await use(new RegisterPage(page));
+    const registerPage = new RegisterPage(page);
+    await registerPage.navigate(); // Open Website
+    await use(registerPage);
   },
 });
 

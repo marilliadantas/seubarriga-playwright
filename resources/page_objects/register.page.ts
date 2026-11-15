@@ -27,9 +27,8 @@ export class RegisterPage {
     await allure.step('Then the user should be registered', () => expect(this.el.successMessage).toContainText(text));
   }
 
-  // Fluxo completo: abre o cadastro, cria o usuário e valida o sucesso
+  // Fluxo completo: cria o usuário e valida o sucesso (a página já vem aberta pela fixture)
   async createAccount(user: UserData) {
-    await this.navigate();
     await this.register(user.Name, user.Email, user.Password);
     await this.shouldRegisterSuccessfully('Usuário inserido com sucesso');
   }

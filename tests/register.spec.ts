@@ -11,6 +11,8 @@ test.describe('Cadastro', () => {
   });
 
   test('Test Case 001: Cadastrar usuário e fazer login', async ({ loginPage, registerPage, data }) => {
+    // Atenção: as fixtures abrem a página na ordem dos parâmetros. registerPage precisa vir por último
+    // entre as duas, senão o teste começa em /login em vez de /cadastro.
     const user = buildUser(data.ValidUser, 'register');
 
     await registerPage.createAccount(user);
